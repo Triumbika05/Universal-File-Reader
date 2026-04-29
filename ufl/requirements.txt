@@ -1,0 +1,9 @@
+pandas
+boto3
+lxml
+paramiko
+PyPDF2
+easyocr
+python-docx
+azure-storage-blob
+python-dotenv

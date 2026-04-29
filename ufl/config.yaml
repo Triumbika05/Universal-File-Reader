@@ -1,0 +1,65 @@
+input:
+  source: local  # local | s3 | sftp | azure
+
+  local:
+    dir: C:\Users\TRIUMBIKA\OneDrive\Desktop\UFL-test #Change here for input directory
+
+  s3:
+    bucket: ufl-tri
+    prefix: raw/
+    region: eu-north-1
+
+  sftp:
+    host: test.rebex.net
+    port: 22
+    user: demo
+    pass: password
+    remote_dir: /pub/example/
+  
+  azure:
+    connection_string: ENV
+    container: raw
+
+
+output:
+  target: s3  # local | s3  | azure
+
+  local:
+    dir: data\processed                      #Change here for output directory
+
+  s3:
+    bucket: ufl-tri
+    prefix: processed/
+    region: eu-north-1
+  
+  azure:
+    connection_string: ENV
+    container: processed
+
+temp_dir: temp/
+
+processing:
+  supported_types: [csv, txt, xml, pdf, png, docx]
+
+  filter:
+    type: single      # all | single | extension
+    value: "sample.csv"      # e.g. sample.csv OR csv
+
+  parallel:
+    enabled: false
+    workers: 2
+
+parsers:
+  csv: parsers.csv_parser.parse_csv
+  txt: parsers.txt_parser.parse_txt
+  xml: parsers.xml_parser.parse_xml
+  pdf: parsers.pdf_parser.parse_pdf
+  png: parsers.png_parser.parse_png
+  docx: parsers.docx_parser.parse_docx
+
+logging:
+  level: INFO
+
+error_handling:
+  move_failed: true
+
